@@ -1,6 +1,6 @@
 
 local G2L,lib = {}, {};
-
+lib.cache = {}
 -- StarterGui.ScreenGui
 G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
 G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
@@ -127,17 +127,24 @@ G2L["1c"] = Instance.new("UIGradient", G2L["1b"]);
 G2L["1c"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(222, 215, 244)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(251, 173, 169))};
 
 function lib:fruit(vl)
-    local fruitelement = Instance.new("TextLabel", G2L["c"]);
-    fruitelement["BorderSizePixel"] = 0;
-    fruitelement["TextSize"] = 14;
-    fruitelement["TextXAlignment"] = Enum.TextXAlignment.Left;
-    fruitelement["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-    fruitelement["FontFace"] = Font.new([[rbxasset://fonts/families/ComicNeueAngular.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-    fruitelement["TextColor3"] = Color3.fromRGB(0, 0, 0);
-    fruitelement["BackgroundTransparency"] = 1;
-    fruitelement["Size"] = UDim2.new(0, 141, 0, 21);
-    fruitelement["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-    fruitelement["Text"] = vl
+    local fruitelement
+    if lib.cache[vl] then
+        fruitelement =  lib.cache[vl]
+    else
+        fruitelement = Instance.new("TextLabel", G2L["c"]);
+        fruitelement["BorderSizePixel"] = 0;
+        fruitelement["TextSize"] = 14;
+        fruitelement["TextXAlignment"] = Enum.TextXAlignment.Left;
+        fruitelement["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+        fruitelement["FontFace"] = Font.new([[rbxasset://fonts/families/ComicNeueAngular.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+        fruitelement["TextColor3"] = Color3.fromRGB(0, 0, 0);
+        fruitelement["BackgroundTransparency"] = 1;
+        fruitelement["Size"] = UDim2.new(0, 141, 0, 21);
+        fruitelement["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        fruitelement["Text"] = vl
+        lib.cache[vl] = fruitelement
+    end
+
     local ok = {}
     function ok:Edit(vvl)
         fruitelement["Text"] = vvl
